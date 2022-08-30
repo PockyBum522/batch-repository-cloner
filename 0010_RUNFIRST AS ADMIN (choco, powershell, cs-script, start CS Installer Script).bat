@@ -130,7 +130,7 @@ echo.
 echo If there are no errors above, your
 echo workstation is now configured per your chosen profile.
 echo.
-echo You must now run InitializeRepos.exe as your user, NOT AS ADMIN.
+echo You must now run 0020_RUNSECOND NOT AS ADMIN.bat as your user, NOT AS ADMIN.
 echo.
 echo Press any key to exit . . .
 
