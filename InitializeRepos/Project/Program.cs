@@ -14,12 +14,15 @@ public static class Program
         
         var teakProjectsResponse = GitManager.PromptUser(
             "Do you want to pull down all Teak Projects (Interdepartmental) repos?");
+        
+        var sikesPersonalProjectsResponse = GitManager.PromptUser(
+            "Do you want to pull down DSikes Github Projects?");
      
         await GitHubDesktopManager.RemoveAllSettingsAndRepos();
 
         await FilesManager.ArchiveAllInSourceReposFolder();
 
-        GitManager.PullDownAllRepos(standardsResponse, engProjectsResponse, teakProjectsResponse);
+        GitManager.PullDownAllRepos(standardsResponse, engProjectsResponse, teakProjectsResponse, sikesPersonalProjectsResponse);
 
         Console.WriteLine();
         Console.WriteLine("Finished!");
