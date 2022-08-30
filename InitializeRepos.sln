@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InitializeRepos", "InitializeRepos\Project\InitializeRepos.csproj", "{8C99A531-79E1-4D07-8505-F15ACC207D46}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InitializeRepos.IntegrationTests", "InitializeRepos\Tests\IntegrationTests\InitializeRepos.IntegrationTests.csproj", "{5CBD89BA-92E7-461B-94A0-61197CB0C966}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InitializeRepos.Demo", "InitializeRepos\InitializeRepos.Demo\InitializeRepos.Demo.csproj", "{D0C52F20-4318-4BB1-AA7F-C85A0F7FCA45}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8C99A531-79E1-4D07-8505-F15ACC207D46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C99A531-79E1-4D07-8505-F15ACC207D46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C99A531-79E1-4D07-8505-F15ACC207D46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C99A531-79E1-4D07-8505-F15ACC207D46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CBD89BA-92E7-461B-94A0-61197CB0C966}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{5CBD89BA-92E7-461B-94A0-61197CB0C966}.Debug|Any CPU.Build.0 = Debug|x64
+		{5CBD89BA-92E7-461B-94A0-61197CB0C966}.Release|Any CPU.ActiveCfg = Release|x64
+		{5CBD89BA-92E7-461B-94A0-61197CB0C966}.Release|Any CPU.Build.0 = Release|x64
+		{D0C52F20-4318-4BB1-AA7F-C85A0F7FCA45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0C52F20-4318-4BB1-AA7F-C85A0F7FCA45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0C52F20-4318-4BB1-AA7F-C85A0F7FCA45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0C52F20-4318-4BB1-AA7F-C85A0F7FCA45}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
