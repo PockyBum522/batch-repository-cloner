@@ -5,12 +5,15 @@ namespace InitializeRepos.Logic;
 
 public class GitManager
 {
+    private static string SourceReposPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "source", "repos");
+    
     private const string EngineeringStandardsUrlsFileName = "EngineeringStandardsRepoUrls.csv";
     private const string EngineeringProjectsUrlsFileName = "EngineeringProjectsRepoUrls.csv";
     private const string TeakProjectsUrlsFileName = "TeakProjectsRepoUrls.csv";
     private const string SikesGithubProjectsUrlsFileName = "SikesPersonalGithubProjects.csv";
     
     private const string TeakTopLevelFolderName = "Teak Isle Repos";
+    private const string SikesGithubTopLevelFolderName = "PockyBum522 Github";
     
     public static void PullDownAllRepos(
         bool standardsResponse, 
@@ -28,18 +31,11 @@ public class GitManager
         if (teakProjectsResponse) PullDownTeakProjectsRepos();
         if (sikesPersonalProjectsResponse) PullDownSikesProjectsRepos();
         
-        // Open folder in explorer
-        var sourceReposPath = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
-            "source",
-            "repos",
-            TeakTopLevelFolderName);
-
         // Open explorer window for each category to make batch adding to GitHub desktop easier
-        if (standardsResponse) Process.Start("explorer", Path.Join(sourceReposPath, "Engineering Standards"));
-        if (engProjectsResponse) Process.Start("explorer", Path.Join(sourceReposPath, "Engineering Projects"));
-        if (teakProjectsResponse) Process.Start("explorer", Path.Join(sourceReposPath, "Teak Projects"));
-        if (sikesPersonalProjectsResponse) Process.Start("explorer", Path.Join(sourceReposPath, "PockyBum522 Github"));
+        if (standardsResponse) Process.Start("explorer", Path.Join(SourceReposPath, TeakTopLevelFolderName, "Engineering Standards"));
+        if (engProjectsResponse) Process.Start("explorer", Path.Join(SourceReposPath, TeakTopLevelFolderName, "Engineering Projects"));
+        if (teakProjectsResponse) Process.Start("explorer", Path.Join(SourceReposPath, TeakTopLevelFolderName, "Teak Projects"));
+        if (sikesPersonalProjectsResponse) Process.Start("explorer", Path.Join(SourceReposPath, "PockyBum522 Github"));
         
         Console.WriteLine();
         Console.WriteLine("To add repos to GitHub Desktop, select all folders inside the folder(s) that just" +
@@ -58,8 +54,8 @@ public class GitManager
         {
             var trimmedLine = line.Replace(",", "");
 
-            PullDevOpsRepoTo(
-                Path.Join(TeakTopLevelFolderName, "PockyBum522 Github"), 
+            PullRepoTo(
+                Path.Join(SourceReposPath, "PockyBum522 Github"),
                 trimmedLine);
         }
     }
@@ -76,8 +72,8 @@ public class GitManager
         {
             var trimmedLine = line.Replace(",", "");
 
-            PullDevOpsRepoTo(
-                Path.Join(TeakTopLevelFolderName, "Engineering Standards"), 
+            PullRepoTo(
+                Path.Join(SourceReposPath, "Teak Isle Repos", "Engineering Standards"), 
                 trimmedLine);
         }
     }
@@ -94,8 +90,8 @@ public class GitManager
         {
             var trimmedLine = line.Replace(",", "");
 
-            PullDevOpsRepoTo(
-                Path.Join(TeakTopLevelFolderName, "Engineering Projects"), 
+            PullRepoTo(
+                Path.Join(SourceReposPath, "Teak Isle Repos", "Engineering Projects"), 
                 trimmedLine);
         }
     }
@@ -112,26 +108,21 @@ public class GitManager
         {
             var trimmedLine = line.Replace(",", "");
 
-            PullDevOpsRepoTo(
-                Path.Join(TeakTopLevelFolderName, "Teak Projects"), 
+            PullRepoTo(
+                Path.Join(SourceReposPath, "Teak Isle Repos", "Teak Projects"), 
                 trimmedLine);
         }
     }
     
-    private static void PullDevOpsRepoTo(string folderName, string repoUrl)
+    private static void PullRepoTo(string folderPath, string repoUrl)
     {
         if (string.IsNullOrEmpty(repoUrl)) return;
-
-        var sourceReposPath = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
-            "source",
-            "repos");
         
         var repoName = repoUrl.Split("/").Last(); 
         
         Console.WriteLine($"Getting repo at: {repoUrl}");
 
-        var destinationPath = Path.Join(sourceReposPath, folderName, repoName);
+        var destinationPath = Path.Join(folderPath, repoName);
         
         var procInfo = new ProcessStartInfo();
         

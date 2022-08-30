@@ -20,6 +20,10 @@
       <Content Include="TeakProjectsRepoUrls.csv">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
+      <None Remove="SikesPersonalGithubProjects.csv" />
+      <Content Include="SikesPersonalGithubProjects.csv">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
 </Project>

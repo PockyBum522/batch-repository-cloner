@@ -123,19 +123,14 @@ echo.
 ::echo "RefreshEnv.cmd only works from cmd.exe, please install the Chocolatey Profile to take advantage of refreshenv from PowerShell"
 call :RefreshEnvironmentVariables
 
-echo.
-echo Now that all dependencies are installed, running main C# script
-echo.
-
-:: %~dp0 is shorthand for full path script is currently running from
-"%~dp0InitializeRepos\Project\bin\Debug\net6.0-windows\InitializeRepos.exe"
-
 echo -------------------------------------------------------
 echo APPLICATION HAS FINISHED CONFIGURATION OF THIS MACHINE
 echo -------------------------------------------------------
 echo.
 echo If there are no errors above, your
 echo workstation is now configured per your chosen profile.
+echo.
+echo You must now run InitializeRepos.exe as your user, NOT AS ADMIN.
 echo.
 echo Press any key to exit . . .
 
