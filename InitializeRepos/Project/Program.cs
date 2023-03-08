@@ -4,59 +4,32 @@ using Newtonsoft.Json;
 
 namespace InitializeRepos;
 
+/// <summary>
+/// Main entry point class
+/// </summary>
 public static class Program
 {
     private static List<string> _jsonFilenamesToUse = new();
     
+    /// <summary>
+    /// Main entry point
+    /// </summary>
     public static async Task Main(string[] args)
     {
-        var repoUrlsToClone = new List<string>()
-        {
-            @"https://teakisle@dev.azure.com/teakisle/EngineeringProjects/_git/BatchTicketUtility",
-            @"https://teakisle@dev.azure.com/teakisle/EngineeringProjects/_git/CutPacketMaker",
-            @"https://teakisle@dev.azure.com/teakisle/EngineeringProjects/_git/EngineeringQueuers",
-            @"https://teakisle@dev.azure.com/teakisle/EngineeringProjects/_git/FolderWatcherAndNotifier",
-            @"https://teakisle@dev.azure.com/teakisle/EngineeringProjects/_git/InventorAddInManager",
-            @"https://teakisle@dev.azure.com/teakisle/EngineeringProjects/_git/InventorKillAllInstances",
-            @"https://teakisle@dev.azure.com/teakisle/EngineeringProjects/_git/InventorScreenshotTool",
-            @"https://teakisle@dev.azure.com/teakisle/EngineeringProjects/_git/InventorWizard",
-            @"https://teakisle@dev.azure.com/teakisle/EngineeringProjects/_git/NasCleaner",
-            @"https://teakisle@dev.azure.com/teakisle/EngineeringProjects/_git/NotesPacketMaker",
-            @"https://teakisle@dev.azure.com/teakisle/EngineeringProjects/_git/PacketAutoPrinter",
-            @"https://teakisle@dev.azure.com/teakisle/EngineeringProjects/_git/ProductionMicaDatabaseClient",
-            @"https://teakisle@dev.azure.com/teakisle/EngineeringProjects/_git/QuickUtilities",
-            @"https://teakisle@dev.azure.com/teakisle/EngineeringProjects/_git/RouterCimMaterialsClient",
-            @"https://teakisle@dev.azure.com/teakisle/EngineeringProjects/_git/RouterCimMaterialScrapManager",
-            @"https://teakisle@dev.azure.com/teakisle/EngineeringProjects/_git/RouterCimMaterialsDatabasesSynchronizer",
-            @"https://teakisle@dev.azure.com/teakisle/EngineeringProjects/_git/RouterCimRunScrapReportMaker",
-            @"https://teakisle@dev.azure.com/teakisle/EngineeringProjects/_git/TeakTools"
-        };
-
-        var repoExample = new OrganizationRepos()
-        {
-            BaseOrganizationFolder = "Teak Isle",
-            OptionalCategorySubfolder = "Engineering Projects",
-            RepoUrlsToClone = repoUrlsToClone
-        };
-
-        SerializeToJson(repoExample);
-        
-        return;
-        
         if (GitManager.PromptUser("Do you want to pull down DSikes Github Projects?"))
-            _jsonFilenamesToUse.Add("SikesPersonalGithubProjects.json");
+            _jsonFilenamesToUse.Add("PockyBum522 - GitHub.json");
      
         if (GitManager.PromptUser("Do you want to pull down all Orlando Science Center repos?"))
-            _jsonFilenamesToUse.Add("OrlandoScienceCenterRepoUrls.json");
+            _jsonFilenamesToUse.Add("Orlando Science Center - GitHub.json");
         
         // if (GitManager.PromptUser("Do you want to pull down all Engineering Standards repos?"))
-        //     _jsonFilenamesToUse.Add(".json");
+        //     _jsonFilenamesToUse.Add("Teak - Engineering Standards.json");
         //
         // if (GitManager.PromptUser("Do you want to pull down all Engineering Projects repos?"))
-        //     _jsonFilenamesToUse.Add(".json");
+        //     _jsonFilenamesToUse.Add("Teak - Engineering Projects.json");
         //     
         // if (GitManager.PromptUser("Do you want to pull down all Teak Projects (Interdepartmental) repos?"))
-        //     _jsonFilenamesToUse.Add(".json");
+        //     _jsonFilenamesToUse.Add("Teak - Organizational Projects.json");
         
         await GitHubDesktopManager.RemoveAllSettingsAndReposInGitHubDesktop();
 
@@ -70,7 +43,11 @@ public static class Program
         Console.ReadLine();
     }
     
-    public static void SerializeToJson(OrganizationRepos reposInformation)
+    /// <summary>
+    /// Use this if you need an easy way to dump some example json
+    /// </summary>
+    /// <param name="reposInformation"></param>
+    private static void SerializeToJson(OrganizationRepos reposInformation)
     {
         var serializer = new JsonSerializer
         {

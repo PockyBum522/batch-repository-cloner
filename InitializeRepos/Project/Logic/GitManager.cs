@@ -1,20 +1,21 @@
 ﻿using System.Diagnostics;
+using System.Text.Json;
+using InitializeRepos.Models;
 using Microsoft.VisualBasic;
+using Newtonsoft.Json;
+using JsonException = Newtonsoft.Json.JsonException;
 
 namespace InitializeRepos.Logic;
 
+/// <summary>
+/// Helper methods for working with git
+/// </summary>
 public class GitManager
 {
-    private static string SourceReposPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "source", "repos");
-    
-    private const string EngineeringStandardsUrlsFileName = "EngineeringStandardsRepoUrls.json";
-    private const string EngineeringProjectsUrlsFileName = "EngineeringProjectsRepoUrls.json";
-    private const string TeakProjectsUrlsFileName = "TeakProjectsRepoUrls.json";
-    private const string SikesGithubProjectsUrlsFileName = "SikesPersonalGithubProjects.json";
-    
-    private const string TeakTopLevelFolderName = "Teak Isle Repos";
-    private const string SikesGithubTopLevelFolderName = "PockyBum522 Github";
-    
+    /// <summary>
+    /// Pulls down all repos from a list of JSON files
+    /// </summary>
+    /// <param name="jsonFilesToUse">List of JSON filenames to pull repos from, serialized from OrganizationRepos</param>
     public static void PullDownAllRepos(List<string> jsonFilesToUse)
     {
         Console.WriteLine();
@@ -24,15 +25,26 @@ public class GitManager
 
         foreach (var jsonFileName in jsonFilesToUse)
         {
+            var fullJsonPath = Path.Join(
+                ApplicationPaths.ThisApplicationRunFromDirectoryPath,
+                "Repo Configurations");
+
+            var reposInfo = LoadJsonOrganizationalInformationFromDisk(
+                Path.Join(fullJsonPath, jsonFileName));
+
+            PullDownAllRepos(reposInfo);
+
+            string reposInfoFinalPath;
+
+            if (string.IsNullOrWhiteSpace(reposInfo.OptionalCategorySubfolder))
+                reposInfoFinalPath = Path.Join(ApplicationPaths.ReposBasePath, reposInfo.BaseOrganizationFolder);
+            else
+                reposInfoFinalPath = Path.Join(ApplicationPaths.ReposBasePath, reposInfo.BaseOrganizationFolder, reposInfo.OptionalCategorySubfolder);
             
+            // Open explorer window for each category to make batch adding to GitHub desktop easier
+            Process.Start("explorer", reposInfoFinalPath);
         }
         
-        // if (sikesPersonalProjectsResponse) PullDownSikesProjectsRepos();
-        
-        // Open explorer window for each category to make batch adding to GitHub desktop easier
-        // if (standardsResponse) Process.Start("explorer", Path.Join(SourceReposPath, TeakTopLevelFolderName, "Engineering Standards"));
-        
-
         Directory.CreateDirectory(
             Path.Join(
                 ApplicationPaths.ReposBasePath,
@@ -43,75 +55,18 @@ public class GitManager
                           "opened and drag them onto a GitHub Desktop window");
     }
 
-    private static void PullDownSikesProjectsRepos()
+    private static void PullDownAllRepos(OrganizationRepos repoInformationToClone)
     {
-        var sikesGithubReposUrls = new List<string>();
+        string reposInfoFinalPath;
         
-        var fullPathTojson = Path.Combine(
-            Path.GetDirectoryName(Environment.ProcessPath) ?? "",
-            SikesGithubProjectsUrlsFileName);
-
-        foreach (var line in File.ReadAllLines(fullPathTojson))
-        {
-            var trimmedLine = line.Replace(",", "");
-
-            PullRepoTo(
-                Path.Join(SourceReposPath, "PockyBum522 Github"),
-                trimmedLine);
-        }
-    }
-
-    private static void PullDownEngineeringStandardsRepos()
-    {
-        var engineeringStandardsReposUrls = new List<string>();
+        if (string.IsNullOrWhiteSpace(repoInformationToClone.OptionalCategorySubfolder))
+            reposInfoFinalPath = Path.Join(ApplicationPaths.ReposBasePath, repoInformationToClone.BaseOrganizationFolder);
+        else
+            reposInfoFinalPath = Path.Join(ApplicationPaths.ReposBasePath, repoInformationToClone.BaseOrganizationFolder, repoInformationToClone.OptionalCategorySubfolder);
         
-        var fullPathTojson = Path.Combine(
-            Path.GetDirectoryName(Environment.ProcessPath) ?? "",
-            EngineeringStandardsUrlsFileName);
-
-        foreach (var line in File.ReadAllLines(fullPathTojson))
+        foreach (var repoUrl in repoInformationToClone.RepoUrlsToClone)
         {
-            var trimmedLine = line.Replace(",", "");
-
-            PullRepoTo(
-                Path.Join(SourceReposPath, "Teak Isle Repos", "Engineering Standards"), 
-                trimmedLine);
-        }
-    }
-
-    private static void PullDownEngineeringProjectsRepos()
-    {
-        var engineeringStandardsReposUrls = new List<string>();
-
-        var fullPathTojson = Path.Combine(
-            Path.GetDirectoryName(Environment.ProcessPath) ?? "",
-            EngineeringProjectsUrlsFileName);
-        
-        foreach (var line in File.ReadAllLines(fullPathTojson))
-        {
-            var trimmedLine = line.Replace(",", "");
-
-            PullRepoTo(
-                Path.Join(SourceReposPath, "Teak Isle Repos", "Engineering Projects"), 
-                trimmedLine);
-        }
-    }
-    
-    private static void PullDownTeakProjectsRepos()
-    {
-        var engineeringStandardsReposUrls = new List<string>();
-
-        var fullPathTojson = Path.Combine(
-            Path.GetDirectoryName(Environment.ProcessPath) ?? "",
-            TeakProjectsUrlsFileName);
-        
-        foreach (var line in File.ReadAllLines(fullPathTojson))
-        {
-            var trimmedLine = line.Replace(",", "");
-
-            PullRepoTo(
-                Path.Join(SourceReposPath, "Teak Isle Repos", "Teak Projects"), 
-                trimmedLine);
+            PullRepoTo(reposInfoFinalPath,repoUrl);
         }
     }
     
@@ -140,6 +95,11 @@ public class GitManager
         proc?.WaitForExit();
     }
 
+    /// <summary>
+    /// Prompts the user, asking if they want to pull down a certain organization or category's repos
+    /// </summary>
+    /// <param name="promptMessage"></param>
+    /// <returns></returns>
     public static bool PromptUser(string promptMessage)
     {
         Console.Write($"{promptMessage} Y/[N]?");
@@ -153,22 +113,24 @@ public class GitManager
         return false;
     }
 
-    private void LoadJsonOganizationalInformationFromDisk()
+    private static OrganizationRepos LoadJsonOrganizationalInformationFromDisk(string jsonFilePath)
     {
-        // var settings = new JsonSerializerSettings
-        // {
-        //     TypeNameHandling = TypeNameHandling.All
-        // };
-        //
-        // if (File.Exists(StatePath))
-        // {
-        //     var jsonStateRaw = File.ReadAllText(StatePath);
-        //
-        //     MainWindowPartialViewModel =
-        //         JsonConvert.DeserializeObject<MainWindowPartialViewModel>(jsonStateRaw, settings) ??
-        //         new MainWindowPartialViewModel();
-        //
-        //     _logger.Debug("Loaded current state from disk");
-        // }
+        var settings = new JsonSerializerSettings
+        {
+            TypeNameHandling = TypeNameHandling.All
+        };
+        
+        if (File.Exists(jsonFilePath))
+        {
+            var jsonStateRaw = File.ReadAllText(jsonFilePath);
+        
+            var jsonLoaded =
+                JsonConvert.DeserializeObject<OrganizationRepos>(jsonStateRaw, settings) ??
+                new OrganizationRepos();
+
+            return jsonLoaded;
+        }
+
+        throw new JsonException();
     }
 }

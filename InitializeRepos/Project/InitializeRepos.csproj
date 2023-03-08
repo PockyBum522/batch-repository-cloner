@@ -5,6 +5,7 @@
         <TargetFramework>net7.0-windows</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
     
     <ItemGroup>
@@ -15,7 +16,31 @@
     </ItemGroup>
     
     <ItemGroup>
+      <PackageReference Include="JetBrains.Annotations" Version="2022.3.1" />
       <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <None Remove="Repo Configurations\Orlando Science Center - GitHub.json" />
+      <Content Include="Repo Configurations\Orlando Science Center - GitHub.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Repo Configurations\PockyBum522 - GitHub.json" />
+      <Content Include="Repo Configurations\PockyBum522 - GitHub.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Repo Configurations\Teak - Engineering Projects.json" />
+      <Content Include="Repo Configurations\Teak - Engineering Projects.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Repo Configurations\Teak - Engineering Standards.json" />
+      <Content Include="Repo Configurations\Teak - Engineering Standards.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Repo Configurations\Teak - Organizational Projects.json" />
+      <Content Include="Repo Configurations\Teak - Organizational Projects.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
 </Project>

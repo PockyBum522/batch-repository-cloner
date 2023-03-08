@@ -1,7 +1,13 @@
 ﻿namespace InitializeRepos.Logic;
 
+/// <summary>
+/// Methods for archiving old repos
+/// </summary>
 public static class FilesManager
 {
+    /// <summary>
+    /// Archives all in old repos folder to a timestamped folder named archive
+    /// </summary>
     public static async Task ArchiveAllInSourceReposFolder()
     {
         var foldersToMove = Directory.GetDirectories(ApplicationPaths.ReposBasePath);

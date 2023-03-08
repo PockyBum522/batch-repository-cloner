@@ -2,8 +2,15 @@
 
 namespace InitializeRepos.Logic;
 
+/// <summary>
+/// Methods for interacting with GitHub Desktop
+/// </summary>
 public static class GitHubDesktopManager
 {
+    /// <summary>
+    /// Deletes all settings and repos currently stored in GitHub Desktop, note that this does
+    /// not delete actual repos on the disk, just the information in GitHub Desktop
+    /// </summary>
     internal static async Task RemoveAllSettingsAndReposInGitHubDesktop()
     {
         var githubDesktopLocalStoragePath = Path.Combine(
