@@ -1,0 +1,24 @@
+{
+  "BaseOrganizationFolder": "Orlando Science Center Github",
+  "OptionalCategorySubfolder": "",
+    "RepoUrlsToClone": [
+        "https://github.com/OrlandoScienceCenter/exhibit-cobra-simulators.git",
+        "https://github.com/OrlandoScienceCenter/exhibits-automation-network.git",
+        "https://github.com/OrlandoScienceCenter/exhibit-paper-airplanes.git",
+        "https://github.com/OrlandoScienceCenter/exhibit-operation-table.git",
+        "https://github.com/OrlandoScienceCenter/observatory-byers-telescope.git",
+        "https://github.com/OrlandoScienceCenter/arduino-touch-lamp-jupiter.git",
+        "https://github.com/OrlandoScienceCenter/exhibit-momentum-table.git",
+        "https://github.com/OrlandoScienceCenter/exhibit-jumping-ring.git",
+        "https://github.com/OrlandoScienceCenter/exhibit-arduino-turing.git",
+        "https://github.com/OrlandoScienceCenter/exhibit-tegu-enclosure.git",
+        "https://github.com/OrlandoScienceCenter/exhibit-mist-tornado.git",
+        "https://github.com/OrlandoScienceCenter/education-magnet-car-mazes.git",
+        "https://github.com/OrlandoScienceCenter/education-watershed-ouc.git",
+        "https://github.com/OrlandoScienceCenter/programs-thors-hammer.git",
+        "https://github.com/OrlandoScienceCenter/programs-musical-tesla-coil.git",
+        "https://github.com/OrlandoScienceCenter/programs-led-panel-image-converter.git",
+        "https://github.com/OrlandoScienceCenter/exhibit-sound-oscilloscope.git",
+        "https://github.com/OrlandoScienceCenter/exhibit-aeolian-landscapes.git"
+  ]
+}

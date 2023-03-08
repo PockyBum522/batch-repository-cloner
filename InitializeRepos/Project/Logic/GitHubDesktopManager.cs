@@ -4,7 +4,7 @@ namespace InitializeRepos.Logic;
 
 public static class GitHubDesktopManager
 {
-    internal static async Task RemoveAllSettingsAndRepos()
+    internal static async Task RemoveAllSettingsAndReposInGitHubDesktop()
     {
         var githubDesktopLocalStoragePath = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),

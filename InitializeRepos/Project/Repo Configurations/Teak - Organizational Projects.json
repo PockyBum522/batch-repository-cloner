@@ -1,0 +1,7 @@
+{
+  "BaseOrganizationFolder": "Teak Isle",
+  "OptionalCategorySubfolder": "Organizational Projects",
+  "RepoUrlsToClone": [
+    "https://teakisle@dev.azure.com/teakisle/TeakProjects/_git/GenericProtocolHandler"
+  ]
+}

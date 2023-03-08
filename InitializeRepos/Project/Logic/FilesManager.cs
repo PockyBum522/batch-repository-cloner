@@ -4,22 +4,17 @@ public static class FilesManager
 {
     public static async Task ArchiveAllInSourceReposFolder()
     {
-        var sourceReposPath = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
-            "source",
-            "repos");
-
-        var foldersToMove = Directory.GetDirectories(sourceReposPath);
+        var foldersToMove = Directory.GetDirectories(ApplicationPaths.ReposBasePath);
         
         var formattedTime = DateTimeOffset.Now.ToString("yyyy-M-d_HH-m-s");
         
         var archiveFolderName = $"Archive_{formattedTime}";
         
         var archiveFolderPath = Path.Combine(
-            sourceReposPath,
+            ApplicationPaths.ReposBasePath,
             archiveFolderName);
         
-        if (foldersToMove.Length > 0 || Directory.GetFiles(sourceReposPath).Length > 0)
+        if (foldersToMove.Length > 0 || Directory.GetFiles(ApplicationPaths.ReposBasePath).Length > 0)
             Directory.CreateDirectory(archiveFolderPath);
         
         var timeoutCountdown = 20;
@@ -37,7 +32,7 @@ public static class FilesManager
                     Directory.Move(folder, fullDestinationPath);
                 }
                 
-                foreach (var file in Directory.GetFiles(sourceReposPath))
+                foreach (var file in Directory.GetFiles(ApplicationPaths.ReposBasePath))
                 {
                     var fullDestinationPath = Path.Join(archiveFolderPath, Path.GetFileName(file));
                     

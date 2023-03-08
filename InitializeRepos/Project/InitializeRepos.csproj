@@ -8,22 +8,14 @@
     </PropertyGroup>
     
     <ItemGroup>
-      <None Remove="EngineeringProjectsRepoUrls.csv" />
-      <Content Include="EngineeringProjectsRepoUrls.csv">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <None Remove="EngineeringStandardsRepoUrls.csv" />
-      <Content Include="EngineeringStandardsRepoUrls.csv">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <None Remove="TeakProjectsRepoUrls.csv" />
-      <Content Include="TeakProjectsRepoUrls.csv">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <None Remove="SikesPersonalGithubProjects.csv" />
-      <Content Include="SikesPersonalGithubProjects.csv">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
+      <None Remove="EngineeringProjectsRepoUrls.json" />
+      <None Remove="EngineeringStandardsRepoUrls.json" />
+      <None Remove="TeakProjectsRepoUrls.json" />
+      <None Remove="SikesPersonalGithubProjects.json" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
     </ItemGroup>
 
 </Project>
